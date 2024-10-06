@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - FLASK_ENV=production
+    volumes:
+      - .:/app
+    command: gunicorn -w 4 -b 0.0.0.0:3000 app:app
+
+  # Uncomment and configure the db service if your app requires a database
+  # db:
+  #   image: postgres:13
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=your_database
+  #     - POSTGRES_USER=your_user
+  #     - POSTGRES_PASSWORD=your_password
+
+# Uncomment if using the db service
+# volumes:
+#   postgres_data:
