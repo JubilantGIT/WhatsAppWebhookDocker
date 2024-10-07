@@ -690,10 +690,21 @@ def webhook():
                     return jsonify(status="error", message="Database query failed"), 500
             
                 if db_response.status_code == 404:
-                    response_message = "You are not registered in our system. Please contact support for assistance."
-                    send_message(business_phone_number_id, user_phone_number, response_message)
-                    return jsonify(status="ok", message="User not registered"), 200
+                    # response_message = "You are not registered in our system. Please contact support for assistance."
                     
+                    # Prepare the template message data
+                    template_name = "hoa_and_customer_main"  # Name of the template
+                    language_code = "en_US"  # Set the language code as needed
+                    # Send the template message
+                    send_message(
+                        phone_number_id=business_phone_number_id,
+                        recipient=user_phone_number,
+                        message_type="template",
+                        template_name=template_name,
+                        language_code=language_code
+                    )
+                    
+                    return jsonify(status="ok", message="User not registered"), 200
                 db_data = db_response.json()
                 print("Parsed database response:", db_data)
                     
